@@ -15,20 +15,20 @@ const EMBER=[.7789,.1722];           // rock centre in the launch photo (fractio
 let heroP=0;
 function heroEnd(){return sc.offsetTop+sc.offsetHeight-innerHeight}
 function set(p){p=cl(p);heroP=p;const t=cl(p/.7);
-  root.style.setProperty('--p',p.toFixed(4));root.style.setProperty('--t',t.toFixed(4));
-  {const u=cl((t-.28)/.52);root.style.setProperty('--u',(u*u*(3-2*u)).toFixed(4))}
+  st.style.setProperty('--p',p.toFixed(4));st.style.setProperty('--t',t.toFixed(4));
+  {const u=cl((t-.28)/.52);st.style.setProperty('--u',(u*u*(3-2*u)).toFixed(4))}
   st.classList.toggle('on',t>.5)}
 function onScroll(){set(scrollY/Math.max(1,heroEnd()))}
 if(Q!==null){set(parseFloat(Q))}else{addEventListener('scroll',onScroll,{passive:true});onScroll()}
 
 /* ---------- the rock + trail ---------- */
 const R=(()=>{const story=document.getElementById('story'),wrap=document.getElementById('tw-wrap'),svg=document.getElementById('trail'),
-  tp=document.getElementById('tp'),tp0=document.getElementById('tp0'),tls=[...document.querySelectorAll('#trail .tl')],tcool=document.getElementById('tcool'),hots=[...document.querySelectorAll('#thot .tl')],rock=document.getElementById('rock'),fx=document.getElementById('fx');
+  tp=document.getElementById('tp'),tp0=document.getElementById('tp0'),tls=[...document.querySelectorAll('#trail .tl')],tcool=document.getElementById('tcool'),hots=[...document.querySelectorAll('#thot .tl')],rock=document.getElementById('rock'),fx=document.getElementById('fx'),endEl=document.getElementById('end');
   let L=0,PRE=0,start=[0,0],photoW=80,sparks=true,last=null,alive=0;
   const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
   const rs=()=>(parseFloat(getComputedStyle(root).getPropertyValue('--rs'))||60)*(story.clientWidth<640?.62:1);
-  function emberPt(){const u0=root.style.getPropertyValue('--u');root.style.setProperty('--u','1');/* phone: read the END framing of the pan */
-    const pl=document.querySelector('.plate').getBoundingClientRect(),sr=st.getBoundingClientRect();root.style.setProperty('--u',u0);
+  function emberPt(){const u0=st.style.getPropertyValue('--u');st.style.setProperty('--u','1');/* phone: read the END framing of the pan */
+    const pl=document.querySelector('.plate').getBoundingClientRect(),sr=st.getBoundingClientRect();st.style.setProperty('--u',u0);
     const W=story.clientWidth;let x=pl.left+pl.width*EMBER[0];const y=pl.top-sr.top+pl.height*EMBER[1];
     photoW=pl.width*.0542*(W<640?.9:1);x=Math.min(Math.max(x,28),W-22);
     return [x,heroEnd()+y-story.offsetTop]}
@@ -52,8 +52,10 @@ const R=(()=>{const story=document.getElementById('story'),wrap=document.getElem
     let d=arc?`M${P0[0]},${P0[1]} L${start[0]},${start[1]}`:`M${start[0]},${start[1]}`;
     for(let i=1;i<pts.length;i++){const [x0,y0]=pts[i-1],[x1,y1]=pts[i],dy=(y1-y0)*.5;
       d+=i===1&&arc?` C${Math.min(W-14,x0+Math.min(phone?90:200,Math.abs(x1-x0)+60))},${y0} ${x1},${y1-dy} ${x1},${y1}`:` C${x0},${y0+dy} ${x1},${y1-dy} ${x1},${y1}`}
-    tp.setAttribute('d',d);tp0.setAttribute('d',d);tls.forEach(p=>p.setAttribute('d',d));L=tp.getTotalLength();tcool.style.strokeDasharray=L;last=null;update()}
-  function at(y){let a=0,b=L;for(let i=0;i<24;i++){const m=(a+b)/2;if(tp.getPointAtLength(m).y<y)a=m;else b=m}return a}
+    tp.setAttribute('d',d);tp0.setAttribute('d',d);tls.forEach(p=>p.setAttribute('d',d));L=tp.getTotalLength();LX=[];LY=[];for(let a=0;a<=L+2;a+=2){const q=tp.getPointAtLength(Math.min(a,L));LX.push(q.x);LY.push(q.y)}RS=rs();tcool.style.strokeDasharray=L;last=null;update()}
+  let LX=[],LY=[],RS=60;/* path lookup table (2 px steps), built once per layout: no getPointAtLength while scrolling */
+  function pAt(l){const f=Math.max(0,Math.min(LX.length-1,l/2)),i=Math.floor(f),k=f-i,j=Math.min(LX.length-1,i+1);return {x:LX[i]+(LX[j]-LX[i])*k,y:LY[i]+(LY[j]-LY[i])*k}}
+  function at(y){let a=0,b=L;for(let i=0;i<24;i++){const m=(a+b)/2;if(pAt(m).y<y)a=m;else b=m}return a}
   function spark(x,y,ang){if(!sparks||reduce||alive>28)return;alive++;const s=document.createElement('i');s.className='spark';fx.appendChild(s);
     const back=ang+Math.PI+(Math.random()-.5)*1.1,dist=18+Math.random()*46;
     const a=s.animate([{transform:`translate(${x}px,${y}px) scale(1)`,opacity:1},{transform:`translate(${x+Math.cos(back)*dist}px,${y+Math.sin(back)*dist+14}px) scale(.3)`,opacity:0}],
@@ -67,14 +69,14 @@ const R=(()=>{const story=document.getElementById('story'),wrap=document.getElem
     if(k>=1&&scrollY>=document.documentElement.scrollHeight-innerHeight-4)l=L; // bottom of the page = landed
     tcool.style.strokeDashoffset=L-l;const HOT=Math.min(560,innerHeight*.62);
     hots.forEach(p=>{const h=Math.min(l,HOT*+p.dataset.f);p.style.strokeDasharray=`${h} ${L+h}`;p.style.strokeDashoffset=h-l});
-    const pt=tp.getPointAtLength(l),p2=tp.getPointAtLength(Math.min(L,l+2)),ang=Math.atan2(p2.y-pt.y,p2.x-pt.x);
-    const size=photoW+(rs()-photoW)*cl(k*1.6);
+    const pt=pAt(l),p2=pAt(Math.min(L,l+2)),ang=Math.atan2(p2.y-pt.y,p2.x-pt.x);
+    const size=photoW+(RS-photoW)*cl(k*1.6);
     rock.style.width=size+'px';
     rock.style.transform=`translate(${pt.x-size/2}px,${pt.y-size*186/208/2}px) rotate(${(l*.12)%360}deg)`;
     const gone=k>0.002;st.classList.toggle('gone',gone);tp0.style.opacity=gone?1:0;rock.style.opacity=gone&&l<L-4?1:0;
     if(gone&&last){const dx=pt.x-last[0],dy=pt.y-last[1];if(dx*dx+dy*dy>36){spark(pt.x,pt.y,ang);if(dx*dx+dy*dy>400)spark(pt.x,pt.y,ang)}}
     last=[pt.x,pt.y];
-    document.getElementById('end').classList.toggle('lit',l>=L-4)}
+    endEl.classList.toggle('lit',l>=L-4)}
   let tick=0;addEventListener('scroll',()=>{if(!tick)tick=requestAnimationFrame(()=>{tick=0;update()})},{passive:true});addEventListener('resize',()=>{clearTimeout(R._t);R._t=setTimeout(build,120)});
   document.fonts.ready.then(build);addEventListener('load',build);
   return {build,update,setSparks:v=>sparks=v}})();

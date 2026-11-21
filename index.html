@@ -789,13 +789,13 @@ body.look-b .chap.alt .meta em,body.look-b .chap.alt .vid figcaption em,body.loo
   #cfg .row2{flex-direction:column;gap:12px}
   #cfg .acts .shuf,#cfg .more-b{height:44px}
   #cfg.open .pv{position:sticky;top:0;z-index:3;background:rgba(20,18,16,.96);margin:0 -20px;padding:8px 20px 10px;box-shadow:0 18px 22px -6px rgba(20,18,16,.96)}
-  #cfg.open .gnav,#cfg.open .lp-ex{display:none}
+  #cfg.open .gnav,#cfg.open .lp-ex,#cfg.open .bar2::before{display:none}
 }
 @media (prefers-reduced-motion:reduce){#cfg .tile,#cfg .ctl.op,#cfg .gdots button,#cfg .gdots button::before{transition:none;animation:none}}
 
 /* ---- Section heads v2 (Nov 21): Apple-style, one big centred headline + one line, no numbered eyebrows ---- */
 .chap .head{display:block;text-align:center;max-width:960px;margin:0 auto 72px}
-.chap .head .n{justify-content:center;font-size:15px;color:var(--bone2);margin:0}
+.chap .head .n{justify-content:center;font-size:15px;color:var(--bone2);margin:0 auto;max-width:none;width:auto}
 .chap .head .n::after,.chap .head .n::before{content:none}
 .chap .head h2{font-size:clamp(46px,6.4vw,104px);line-height:.96;letter-spacing:-.018em;margin-top:14px}
 .chap .head p{margin:24px auto 0;max-width:34em;font-size:19px;line-height:1.5}

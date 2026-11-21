@@ -19,7 +19,9 @@ function set(p){p=cl(p);heroP=p;const t=cl(p/.7);
   {const u=cl((t-.28)/.52);st.style.setProperty('--u',(u*u*(3-2*u)).toFixed(4))}
   st.classList.toggle('on',t>.5)}
 function onScroll(){set(scrollY/Math.max(1,heroEnd()))}
-if(Q!==null){set(parseFloat(Q))}else{addEventListener('scroll',onScroll,{passive:true});onScroll()}
+let hTk=0;if(Q!==null){set(parseFloat(Q))}else{addEventListener('scroll',()=>{if(!hTk)hTk=requestAnimationFrame(()=>{hTk=0;onScroll()})},{passive:true});onScroll()}
+/* decode the later hero photos up front so the streak/launch swap never waits on an AVIF decode (iPhone hitch) */
+addEventListener('load',()=>document.querySelectorAll('.plate img').forEach(i=>{if(i.decode)i.decode().catch(()=>{})}));
 
 /* ---------- the rock + trail ---------- */
 const R=(()=>{const story=document.getElementById('story'),wrap=document.getElementById('tw-wrap'),svg=document.getElementById('trail'),
@@ -73,7 +75,7 @@ const R=(()=>{const story=document.getElementById('story'),wrap=document.getElem
     const size=photoW+(RS-photoW)*cl(k*1.6);
     rock.style.width=size+'px';
     rock.style.transform=`translate(${pt.x-size/2}px,${pt.y-size*186/208/2}px) rotate(${(l*.12)%360}deg)`;
-    const gone=k>0.002;st.classList.toggle('gone',gone);tp0.style.opacity=gone?1:0;rock.style.opacity=gone&&l<L-4?1:0;
+    const gone=k>0.002;st.classList.toggle('gone',gone);{const vis=gone||scrollY>=hE?'':'hidden';if(wrap.style.visibility!==vis)wrap.style.visibility=vis}/* page-tall trail layer off until launch */tp0.style.opacity=gone?1:0;rock.style.opacity=gone&&l<L-4?1:0;
     if(gone&&last){const dx=pt.x-last[0],dy=pt.y-last[1];if(dx*dx+dy*dy>36){spark(pt.x,pt.y,ang);if(dx*dx+dy*dy>400)spark(pt.x,pt.y,ang)}}
     last=[pt.x,pt.y];
     endEl.classList.toggle('lit',l>=L-4)}
@@ -116,7 +118,7 @@ const CFG=(()=>{
     barber:{names:[['Hale & Co.','Barbers'],['Ironside','Barber Shop'],['Sterling','Barber Club']],nav:['Services','Team'],cta:'Book a cut',tag:{bold:'Sharp cuts. Every time.',warm:'Pull up a chair, we got you.',calm:'A clean cut, no rush.',play:'Fresh cut, fresh start.'}},
     studio:{names:[['Still','Pilates Studio'],['Nova','Pilates'],['Arc','Reformer Studio']],nav:['Classes','Studio'],cta:'Book a class',tag:{bold:'Stronger in fifty minutes.',warm:'Move well, feel at home.',calm:'Breathe in. Move slow.',play:'Wobbly first class? Welcome.'}},
     grill:{names:[['Brasa','Wood-fire Grill'],['Ember & Oak','Kitchen'],['Salt & Coal','Grill House']],nav:['Menu','Visit'],cta:'Reserve',tag:{bold:'Fire, meat, nothing else.',warm:'Sunday lunch, every day.',calm:'Good food, take your time.',play:'Come hungry. Leave happy.'}},
-    salon:{names:[['Lumi','Hair Studio'],['Muse','Salon'],['Velvet','Hair & Colour']],nav:['Services','Gallery'],cta:'Book now',tag:{bold:'Colour that turns heads.',warm:'Your hour, just for you.',calm:'Quiet chair, good hands.',play:'Every day is a hair day.'}},
+    salon:{names:[['Lumi','Hair Studio'],['Muse','Salon'],['Velvet','Hair & Color']],nav:['Services','Gallery'],cta:'Book now',tag:{bold:'Color that turns heads.',warm:'Your hour, just for you.',calm:'Quiet chair, good hands.',play:'Every day is a hair day.'}},
     gym:{names:[['Iron Yard','Strength Club'],['Forge','Training Co.'],['Atlas','Gym']],nav:['Classes','Coaches'],cta:'Join',tag:{bold:'Show up. Lift heavy.',warm:'Stronger, together.',calm:'Train well. Rest well.',play:'Leg day is every day.'}}};
   for(const k in KINDS)KINDS[k].marks=Object.keys(MARKS).filter(id=>MARKS[id].kind===k);
   const COLS=[['Cobalt','#2A47C4'],['Forest','#1F5A43'],['Oxblood','#7A1F2A'],['Saffron','#E2A426'],['Rose','#E07A93'],['Plum','#5B2A6E'],['Teal','#0F7C7A'],['Coral','#F0623F'],['Sky','#7FB2EC'],['Ink','#18181C']];
@@ -132,14 +134,14 @@ const CFG=(()=>{
   box.querySelector('[data-k=kind]').addEventListener('pointerover',e=>{const b=e.target.closest('button');if(b)lpMock.warmKey(b.dataset.v,S.col==='custom'?lpMock.near(S.custom):S.col)});
   const acW=box.querySelector('[data-k=acc]');
   ACC.forEach(([n,c])=>{const b=document.createElement('button');b.type='button';b.dataset.v=c;b.title=n;b.setAttribute('aria-label',n);b.style.background=c==='same'?'conic-gradient(var(--bone2) 0 50%,transparent 0) , #2A2622':c;if(c==='same')b.innerHTML='<svg viewBox="0 0 30 30" style="width:100%;height:100%"><path d="M8 22L22 8" stroke="#EDE6DA" stroke-width="1.5"/></svg>',b.style.background='#2A2622';acW.appendChild(b)});
-  const cusA=document.createElement('label');cusA.className='cus';cusA.title='Any accent';cusA.dataset.v='customA';cusA.innerHTML='<input type="color" value="#D9A441" aria-label="Pick any accent colour">';acW.appendChild(cusA);const cusAI=cusA.querySelector('input');
+  const cusA=document.createElement('label');cusA.className='cus';cusA.title='Any accent';cusA.dataset.v='customA';cusA.innerHTML='<input type="color" value="#D9A441" aria-label="Pick any accent color">';acW.appendChild(cusA);const cusAI=cusA.querySelector('input');
   cusAI.addEventListener('input',()=>{S.acc='customA';S.customAcc=cusAI.value;render(false)});cusA.addEventListener('click',()=>{if(S.acc!=='customA'){S.acc='customA';S.customAcc=cusAI.value;render(false)}});
   const icW=box.querySelector('[data-k=icon]');
   function icons(){icW.innerHTML=KINDS[S.kind].marks.map(id=>`<button type="button" data-v="${id}" title="${MARKS[id].n}" aria-label="${MARKS[id].n}">${msvg(id)}</button>`).join('')}
   box.querySelector('.ctabs').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;box.querySelectorAll('.ctabs button').forEach(x=>x.setAttribute('aria-selected',String(x===b)));box.querySelectorAll('.pane').forEach(p=>p.hidden=p.dataset.p!==b.dataset.p)});
   const tagI=document.getElementById('c-tag');tagI.addEventListener('input',()=>{S.tagOwn=tagI.value;render(false)});
-  const cus=document.createElement('label');cus.className='cus';cus.title='Any colour';cus.dataset.v='custom';
-  cus.innerHTML='<input type="color" value="#2A47C4" aria-label="Pick any colour">';swW.appendChild(cus);const cusI=cus.querySelector('input');
+  const cus=document.createElement('label');cus.className='cus';cus.title='Any color';cus.dataset.v='custom';
+  cus.innerHTML='<input type="color" value="#2A47C4" aria-label="Pick any color">';swW.appendChild(cus);const cusI=cus.querySelector('input');
   /* colour maths */
   const hx=h=>[1,3,5].map(i=>parseInt(h.slice(i,i+2),16)),toH=a=>'#'+a.map(v=>Math.round(Math.max(0,Math.min(255,v))).toString(16).padStart(2,'0')).join('');
   const mix=(a,b,t)=>{const A=hx(a),B=hx(b);return toH(A.map((v,i)=>v+(B[i]-v)*t))};
@@ -150,7 +152,7 @@ const CFG=(()=>{
     else{g=b;ik=bi;m=bi}
     const f=S.gr==='brand'?bi:b,fi=S.gr==='brand'?b:bi;
     let a=f,ai=fi,an='Same as main';if(S.acc!=='same'){a=S.acc==='customA'?S.customAcc:S.acc;ai=lum(a)>.36?'#16130F':'#FBF8F3';an=S.acc==='customA'?'Your accent':ACC.find(x=>x[1]===S.acc)[0]}
-    return {b,bi,g,ik,m,f,fi,a,ai,an,n:S.col==='custom'?'Your colour':COLS[S.col][0]}}
+    return {b,bi,g,ik,m,f,fi,a,ai,an,n:S.col==='custom'?'Your color':COLS[S.col][0]}}
   const esc=s=>s.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
   const nm=()=>S.name.trim()||'Your name';
   const words=()=>nm().split(/\s+/).filter(w=>/^[\p{L}\p{N}]/u.test(w));
@@ -307,7 +309,7 @@ const CFG=(()=>{
  snd.addEventListener('click',()=>{lpFull(v);v.muted=!v.muted;if(!v.muted){v.currentTime=0;v.play().catch(()=>{})}
   snd.setAttribute('aria-pressed',String(!v.muted));snd.querySelector('span').textContent=v.muted?'Sound on':'Sound off'});
  const WHERE={cafe:['coffee near me','Coffee, pastries and a seat by the window.'],barber:['barber near me','Walk-ins welcome. Book online in seconds.'],studio:['pilates classes near me','Small classes, real coaching, all levels.'],
-  grill:['restaurant near me','Wood-fire grill. Book a table tonight.'],salon:['hair salon near me','Cuts, colour and care. Book online.'],gym:['gym near me','Coaching, classes and open gym.']};
+  grill:['restaurant near me','Wood-fire grill. Book a table tonight.'],salon:['hair salon near me','Cuts, color and care. Book online.'],gym:['gym near me','Coaching, classes and open gym.']};
  function g(){const S=CFG.S,o=document.getElementById('out'),cs=getComputedStyle(o);const nm=((S.name.trim()||'Your name')+(S.desc.trim()&&S.name.trim().split(/\s+/).length<2?' '+S.desc.trim():'')),k=S.kind;
   const slug=nm.toLowerCase().normalize('NFD').replace(/[^a-z0-9]/g,'')||'yourname';const tag=o.querySelector('[data-slot=tag]').textContent;
   document.getElementById('gq').textContent=WHERE[k][0];document.getElementById('gname').textContent=nm;document.getElementById('gurl').textContent='www.'+slug+'.com';

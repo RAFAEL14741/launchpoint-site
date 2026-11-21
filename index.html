@@ -4,7 +4,20 @@
 <meta charset="utf-8">
 <script>document.documentElement.classList.add('lq')</script>
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Launch Point — frame I (showcase)</title>
+<title>Launch Point Marketing · Brand, websites, social &amp; ads · Philadelphia</title>
+<meta name="description" content="Launch Point builds your brand, website and social accounts, then runs the content and ads that grow them. Philadelphia, English and Português.">
+<meta name="theme-color" content="#141210">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="canonical" href="https://rafael14741.github.io/launchpoint-site/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Launch Point Marketing">
+<meta property="og:title" content="Launch Point Marketing · We make it go somewhere">
+<meta property="og:description" content="Brand, websites, social and ads for local businesses in Philadelphia. English and Português.">
+<meta property="og:url" content="https://rafael14741.github.io/launchpoint-site/">
+<meta property="og:image" content="https://rafael14741.github.io/launchpoint-site/og.jpg">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
 <style>
 picture{display:contents}picture>source{display:none}
 
@@ -804,11 +817,30 @@ body.look-b .chap.alt .meta em,body.look-b .chap.alt .vid figcaption em,body.loo
 /* ---- Phone hero lite (Nov 21 b): iPhone Safari can't hold the rotated 2352px wipe window (~7000px @3x) or masked plate layers.
    Phone = streak fades in (opacity only), no masks, no filters; the pan stays a transform. Desktop keeps the wipe. ---- */
 @media (max-width:700px){
-  .stage::before{content:"";position:absolute;left:0;right:0;top:0;height:14%;z-index:1;pointer-events:none;background:linear-gradient(180deg,var(--graphite),rgba(20,18,16,0))}
+  .plate::after{content:"";position:absolute;left:0;right:0;top:-1px;height:10%;z-index:3;pointer-events:none;background:linear-gradient(180deg,var(--graphite),rgba(20,18,16,0))}
   .plate{-webkit-mask-image:none!important;mask-image:none!important}
   .plate img{filter:none}
   .bw{left:0;top:0;width:100%;height:100%;transform:none;-webkit-mask-image:none;mask-image:none;will-change:opacity;opacity:calc(var(--t) * 1.7 - .25)}
   .bi{left:0;top:0;transform:none;will-change:auto}
+}
+
+/* phone trail lite (Nov 21 c): the 3 widest, faintest glow strokes cost a repaint each frame on a page-tall SVG and are barely visible at phone size */
+@media (max-width:700px){#thot .h1,#thot .h2,#tcool .c1{display:none}}
+
+/* phone hero services (Nov 21 c): desktop lists the 4 services in the hero, phone hid them; show them as one compact row */
+@media (max-width:640px){
+  .svc{display:flex;flex-direction:row;flex-wrap:wrap;left:20px;right:20px;bottom:104px;gap:6px 16px;text-align:left}
+  .svc li{font-size:14px;gap:6px;justify-content:flex-start}
+  .svc li span{font-size:11px}
+}
+
+/* phone tap targets (Nov 21 c): every control >=44px tall for a fingertip; arrows never squish */
+@media (max-width:700px){
+  #cfg .gar{width:44px;height:44px;flex:none}
+  #cfg .gdots{padding:0 6px}
+  #cfg .gdots button{width:26px;height:44px}#cfg .gdots button[aria-current=true]{width:42px}
+  .soc2 .bars button{height:44px}
+  .soc2 .bars{margin-top:6px}
 }
 </style>
 </head>
@@ -857,7 +889,7 @@ body.look-b .chap.alt .meta em,body.look-b .chap.alt .vid figcaption em,body.loo
   <h4>Rock</h4>
   <label><span>Size <i id="v-rs"></i></span><input type="range" id="t-rs" min="36" max="100" value="60"></label>
   <div class="row" id="t-spark"><button data-v="1">Sparks on</button><button data-v="0">Off</button></div>
-  <h4>Hero colour</h4>
+  <h4>Hero color</h4>
   <div class="row" id="t-ember">
    <button class="sw" data-v="#CF5A1E" style="background:#CF5A1E" title="Ember"></button>
    <button class="sw" data-v="#B8733A" style="background:#B8733A" title="Copper"></button>
@@ -885,7 +917,7 @@ body.look-b .chap.alt .meta em,body.look-b .chap.alt .vid figcaption em,body.loo
   <div class="in-wrap">
    <div class="head">
     <div><p class="n">Brand</p><h2>First, a brand <br>worth following<em>.</em></h2></div>
-    <div><p>Logo, colours, type and voice, built to look as good on a phone screen as on a storefront.</p></div>
+    <div><p>Logo, colors, type and voice, built to look as good on a phone screen as on a storefront.</p></div>
    </div>
    <div class="cfg cfg2" id="cfg">
     <div class="pv">
@@ -899,9 +931,9 @@ body.look-b .chap.alt .meta em,body.look-b .chap.alt .vid figcaption em,body.loo
       <div class="tile t-merch"><div class="tote"><svg class="bag" viewBox="0 0 86 100"><path d="M24 30V20a19 19 0 0 1 38 0v10" fill="none" stroke="currentColor" stroke-width="4"/><path d="M8 28h70l-4 72H12z" fill="currentColor"/></svg><div class="ico fx" data-slot="icon-b"></div></div><div class="sticker ico fx" data-slot="icon-s"></div><div class="pst" aria-hidden="true"><picture><source type="image/webp"><img alt=""></picture><div class="ink ik-ico on-b" data-q="tote" data-w="140"><div class="ico fx" data-slot="icon-b"></div></div><div class="ink ik-ico on-b ik-cup" data-q="cup" data-w="60"><div class="ico fx" data-slot="icon-s"></div></div></div><span class="cap" data-phc="Tote &amp; cup">Merch</span></div>
      </div>
     <div class="gnav"><button type="button" class="gar" id="g-prev" aria-label="Previous mockup"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3L5 8l5 5"/></svg></button><div class="gdots" id="g-dots" role="group" aria-label="Mockups"></div><button type="button" class="gar" id="g-next" aria-label="Next mockup"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3l5 5-5 5"/></svg></button></div><p class="lp-ex"><i aria-hidden="true"></i><span><b>These are example logos.</b> <span class="lp-ex-l">Every client gets a custom logo, designed from scratch for their business.</span><span class="lp-ex-s">Yours is designed from scratch.</span></span></p></div>
-    <div class="bar2"><div class="g g-kind"><span class="lb vh">Kind of business</span><div class="seg" data-k="kind"><button data-v="cafe">Café</button><button data-v="barber">Barber</button><button data-v="studio">Pilates</button><button data-v="grill">Restaurant</button><button data-v="salon">Salon</button><button data-v="gym">Gym</button></div></div><div class="row2"><div class="g g-voice"><span class="lb vh">Voice</span><div class="seg c4" data-k="voice"><button data-v="bold">Bold</button><button data-v="warm">Warm</button><button data-v="calm">Calm</button><button data-v="play">Playful</button></div></div><div class="acts"><button type="button" class="shuf" id="c-shuf"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M2 4h3l6 8h3M2 12h3l1.6-2.1M9.4 6.1L11 4h3M12 2l2 2-2 2M12 10l2 2-2 2"/></svg>Surprise me</button><button type="button" class="more-b" id="c-more" aria-expanded="false" aria-controls="cfg-ctl">Customise<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg></button></div></div></div>
+    <div class="bar2"><div class="g g-kind"><span class="lb vh">Kind of business</span><div class="seg" data-k="kind"><button data-v="cafe">Café</button><button data-v="barber">Barber</button><button data-v="studio">Pilates</button><button data-v="grill">Restaurant</button><button data-v="salon">Salon</button><button data-v="gym">Gym</button></div></div><div class="row2"><div class="g g-voice"><span class="lb vh">Voice</span><div class="seg c4" data-k="voice"><button data-v="bold">Bold</button><button data-v="warm">Warm</button><button data-v="calm">Calm</button><button data-v="play">Playful</button></div></div><div class="acts"><button type="button" class="shuf" id="c-shuf"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M2 4h3l6 8h3M2 12h3l1.6-2.1M9.4 6.1L11 4h3M12 2l2 2-2 2M12 10l2 2-2 2"/></svg>Surprise me</button><button type="button" class="more-b" id="c-more" aria-expanded="false" aria-controls="cfg-ctl">Customize<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg></button></div></div></div>
     <div class="ctl" id="cfg-ctl" hidden>
-     <div class="ctabs" role="tablist" aria-label="Brand options"><button type="button" role="tab" data-p="biz" aria-selected="true">Basics</button><button type="button" role="tab" data-p="logo" aria-selected="false">Logo</button><button type="button" role="tab" data-p="col" aria-selected="false">Colour</button><button type="button" role="tab" data-p="type" aria-selected="false">Type</button></div>
+     <div class="ctabs" role="tablist" aria-label="Brand options"><button type="button" role="tab" data-p="biz" aria-selected="true">Basics</button><button type="button" role="tab" data-p="logo" aria-selected="false">Logo</button><button type="button" role="tab" data-p="col" aria-selected="false">Color</button><button type="button" role="tab" data-p="type" aria-selected="false">Type</button></div>
      <div class="pane" data-p="biz">
       <div class="g"><label class="lb" for="c-name">Business name </label><input type="text" id="c-name" maxlength="18" value="Corvo" autocomplete="off" spellcheck="false"></div>
       <div class="g"><label class="lb" for="c-desc">Line under the name</label><input type="text" id="c-desc" maxlength="22" value="Coffee Bar" autocomplete="off" spellcheck="false"></div>
@@ -916,9 +948,9 @@ body.look-b .chap.alt .meta em,body.look-b .chap.alt .vid figcaption em,body.loo
       <div class="g"><span class="lb">Letters</span><div class="seg" data-k="cs"><button data-v="as">Aa</button><button data-v="up">AA</button><button data-v="low">aa</button></div></div>
      </div>
      <div class="pane" data-p="col" hidden>
-      <div class="g"><span class="lb"><span>Main colour <b id="c-cn"></b></span></span><div class="sw" data-k="col"></div></div>
+      <div class="g"><span class="lb"><span>Main color <b id="c-cn"></b></span></span><div class="sw" data-k="col"></div></div>
       <div class="g"><span class="lb"><span>Accent for buttons <b id="c-an"></b></span></span><div class="sw" data-k="acc"></div></div>
-      <div class="g"><span class="lb">Background</span><div class="seg" data-k="gr"><button data-v="light">Light</button><button data-v="dark">Dark</button><button data-v="brand">Colour</button></div></div>
+      <div class="g"><span class="lb">Background</span><div class="seg" data-k="gr"><button data-v="light">Light</button><button data-v="dark">Dark</button><button data-v="brand">Color</button></div></div>
      </div>
      <div class="pane" data-p="type" hidden>
       <div class="g"><span class="lb">Typeface</span><div class="seg" data-k="type"><button data-v="classic" style="font-family:Serif;font-weight:400;font-size:16px">Classic</button><button data-v="elegant" style="font-family:Corm;font-weight:500;font-size:16px">Elegant</button><button data-v="soft" style="font-family:Fraunces;font-weight:600">Soft</button><button data-v="loud" style="font-family:Archivo;font-weight:400">Loud</button><button data-v="modern" style="font-family:Syne;font-weight:700">Modern</button><button data-v="tech" style="font-family:Mono;font-weight:500;font-size:12px;letter-spacing:.04em">TECH</button></div></div>
@@ -982,15 +1014,15 @@ body.look-b .chap.alt .meta em,body.look-b .chap.alt .vid figcaption em,body.loo
     <div><p>We plan, shoot, edit and post, so your Instagram and TikTok look like a brand, every week.</p></div>
    </div>
    <div class="soc2" id="soc2"><div class="soc2-st">
-    <ul class="types" id="types" hidden><li><button type="button" data-t="reel"><b>Reels</b><span>Short video gets shown to people who don't follow you yet.</span></button></li><li><button type="button" data-t="carousel"><b>Carousels</b><span>Swipe posts get saved and sent, so they keep travelling.</span></button></li><li><button type="button" data-t="product"><b>Product posts</b><span>Clean, matching shots so the feed looks like one brand.</span></button></li><li><button type="button" data-t="tip"><b>Tips</b><span>Something useful is a reason to follow.</span></button></li><li><button type="button" data-t="offer"><b>Offers</b><span>One clear reason to buy, one action.</span></button></li><li><button type="button" data-t="brand"><b>Brand moments</b><span>Mood posts that make the account feel like a place.</span></button></li></ul>
-    <div class="beats"><div class="beat" data-k="0" data-ts="reel"><h3>Reels reach new people<em>.</em></h3><p>Short video gets shown to people who don&rsquo;t follow you yet. That&rsquo;s where new customers come from.</p></div><div class="beat" data-k="1" data-ts="carousel tip"><h3>Carousels and tips get saved<em>.</em></h3><p>Useful posts get saved and sent to a friend, so they keep travelling long after you post them.</p></div><div class="beat" data-k="2" data-ts="product offer"><h3>Product posts and offers sell<em>.</em></h3><p>Clean, matching shots of what you sell, and one clear reason to buy this week.</p></div><div class="beat" data-k="3" data-ts="brand"><h3>Brand moments make it a place<em>.</em></h3><p>Mood posts that make the feed feel like somewhere people want to be.</p></div><div class="bars" role="group" aria-label="Social, part"><button type="button" data-k="0" aria-label="Show part 1 of 4"><i></i></button><button type="button" data-k="1" aria-label="Show part 2 of 4"><i></i></button><button type="button" data-k="2" aria-label="Show part 3 of 4"><i></i></button><button type="button" data-k="3" aria-label="Show part 4 of 4"><i></i></button></div></div>
+    <ul class="types" id="types" hidden><li><button type="button" data-t="reel"><b>Reels</b><span>Short video gets shown to people who don't follow you yet.</span></button></li><li><button type="button" data-t="carousel"><b>Carousels</b><span>Swipe posts get saved and sent, so they keep traveling.</span></button></li><li><button type="button" data-t="product"><b>Product posts</b><span>Clean, matching shots so the feed looks like one brand.</span></button></li><li><button type="button" data-t="tip"><b>Tips</b><span>Something useful is a reason to follow.</span></button></li><li><button type="button" data-t="offer"><b>Offers</b><span>One clear reason to buy, one action.</span></button></li><li><button type="button" data-t="brand"><b>Brand moments</b><span>Mood posts that make the account feel like a place.</span></button></li></ul>
+    <div class="beats"><div class="beat" data-k="0" data-ts="reel"><h3>Reels reach new people<em>.</em></h3><p>Short video gets shown to people who don&rsquo;t follow you yet. That&rsquo;s where new customers come from.</p></div><div class="beat" data-k="1" data-ts="carousel tip"><h3>Carousels and tips get saved<em>.</em></h3><p>Useful posts get saved and sent to a friend, so they keep traveling long after you post them.</p></div><div class="beat" data-k="2" data-ts="product offer"><h3>Product posts and offers sell<em>.</em></h3><p>Clean, matching shots of what you sell, and one clear reason to buy this week.</p></div><div class="beat" data-k="3" data-ts="brand"><h3>Brand moments make it a place<em>.</em></h3><p>Mood posts that make the feed feel like somewhere people want to be.</p></div><div class="bars" role="group" aria-label="Social, part"><button type="button" data-k="0" aria-label="Show part 1 of 4"><i></i></button><button type="button" data-k="1" aria-label="Show part 2 of 4"><i></i></button><button type="button" data-k="2" aria-label="Show part 3 of 4"><i></i></button><button type="button" data-k="3" aria-label="Show part 4 of 4"><i></i></button></div></div>
     <div class="phwrap">
      <div class="phone"><div class="scr">
       <div class="igbar"><b>halftimechews</b><span class="dots"><i></i><i></i><i></i></span></div>
       <div class="igpro"><span class="av"><img src="img/social/gummy-mark.webp" alt=""></span><div><b>HalfTime Chews</b><span>Electrolyte chews for the second half.</span></div></div>
       <div class="igact"><span class="f">Follow</span><span>Message</span></div>
       <div class="igtabs"><span class="on"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M2 2h3.5v3.5H2zM6.25 2h3.5v3.5h-3.5zM10.5 2H14v3.5h-3.5zM2 6.25h3.5v3.5H2zM6.25 6.25h3.5v3.5h-3.5zM10.5 6.25H14v3.5h-3.5zM2 10.5h3.5V14H2zM6.25 10.5h3.5V14h-3.5zM10.5 10.5H14V14h-3.5z"/></svg></span><span><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="2" y="2" width="12" height="12" rx="3"/><path d="M6.5 5.5v5l4-2.5z" fill="currentColor"/></svg></span></div>
-      <div class="iggrid" id="iggrid"><button type="button" class="post p-reel" data-t="reel" data-cap="Tear. Chew. Keep going. Four soft chews for the second half." data-bg="img/social/reel.jpg" aria-label="Tear. Chew. Keep going. Four soft chews for the second half."><span class="t big">Tear. Chew.<br>Keep going.</span><svg class="ic" viewBox="0 0 16 16" fill="currentColor"><path d="M5 3.5v9l7.5-4.5z"/></svg></button><button type="button" class="post p-car" data-t="carousel" data-cap="Why chews, not a drink? Swipe through."  aria-label="Why chews, not a drink? Swipe through."><span class="t">Why chews,<br>not a drink<span class="d">?</span></span><span class="cnt">1/4</span><svg class="ic" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2.5" y="4.5" width="8" height="9" rx="1.5"/><path d="M5.5 2.5h7a1 1 0 0 1 1 1v8"/></svg></button><button type="button" class="post p-pack" data-t="product" data-cap="The pack. Four chews, fits in a sock." data-bg="img/social/pack.jpg" aria-label="The pack. Four chews, fits in a sock."></button><button type="button" class="post p-citrus" data-t="product" data-cap="Citrus is here." data-bg="img/social/citrus.jpg" aria-label="Citrus is here."><span class="t lo">Citrus.</span></button><button type="button" class="post p-tip" data-t="tip" data-cap="Cramp at minute 70? Sweat takes salt with it."  aria-label="Cramp at minute 70? Sweat takes salt with it."><span class="t sm">Cramp at<br>minute 70<span class="d">?</span></span><span class="s">Sweat takes salt with it. Put it back at halftime.</span></button><button type="button" class="post p-field" data-t="brand" data-cap="Built for the second half." data-bg="img/social/field.jpg" aria-label="Built for the second half."><span class="t lo">Built for the<br>second half.</span></button><button type="button" class="post p-box" data-t="offer" data-cap="Team box: twelve packs for the whole squad." data-bg="img/social/box.jpg" aria-label="Team box: twelve packs for the whole squad."><span class="t lo sm">Team box.</span><span class="tag">Order for the squad</span></button><button type="button" class="post p-split" data-t="product" data-cap="Soft in the middle, sugar on the outside." data-bg="img/social/split.jpg" aria-label="Soft in the middle, sugar on the outside."></button><button type="button" class="post p-berry" data-t="product" data-cap="Berry, the team favourite." data-bg="img/social/berry.jpg" aria-label="Berry, the team favourite."><span class="t lo">Berry.</span></button></div>
+      <div class="iggrid" id="iggrid"><button type="button" class="post p-reel" data-t="reel" data-cap="Tear. Chew. Keep going. Four soft chews for the second half." data-bg="img/social/reel.jpg" aria-label="Tear. Chew. Keep going. Four soft chews for the second half."><span class="t big">Tear. Chew.<br>Keep going.</span><svg class="ic" viewBox="0 0 16 16" fill="currentColor"><path d="M5 3.5v9l7.5-4.5z"/></svg></button><button type="button" class="post p-car" data-t="carousel" data-cap="Why chews, not a drink? Swipe through."  aria-label="Why chews, not a drink? Swipe through."><span class="t">Why chews,<br>not a drink<span class="d">?</span></span><span class="cnt">1/4</span><svg class="ic" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2.5" y="4.5" width="8" height="9" rx="1.5"/><path d="M5.5 2.5h7a1 1 0 0 1 1 1v8"/></svg></button><button type="button" class="post p-pack" data-t="product" data-cap="The pack. Four chews, fits in a sock." data-bg="img/social/pack.jpg" aria-label="The pack. Four chews, fits in a sock."></button><button type="button" class="post p-citrus" data-t="product" data-cap="Citrus is here." data-bg="img/social/citrus.jpg" aria-label="Citrus is here."><span class="t lo">Citrus.</span></button><button type="button" class="post p-tip" data-t="tip" data-cap="Cramp at minute 70? Sweat takes salt with it."  aria-label="Cramp at minute 70? Sweat takes salt with it."><span class="t sm">Cramp at<br>minute 70<span class="d">?</span></span><span class="s">Sweat takes salt with it. Put it back at halftime.</span></button><button type="button" class="post p-field" data-t="brand" data-cap="Built for the second half." data-bg="img/social/field.jpg" aria-label="Built for the second half."><span class="t lo">Built for the<br>second half.</span></button><button type="button" class="post p-box" data-t="offer" data-cap="Team box: twelve packs for the whole squad." data-bg="img/social/box.jpg" aria-label="Team box: twelve packs for the whole squad."><span class="t lo sm">Team box.</span><span class="tag">Order for the squad</span></button><button type="button" class="post p-split" data-t="product" data-cap="Soft in the middle, sugar on the outside." data-bg="img/social/split.jpg" aria-label="Soft in the middle, sugar on the outside."></button><button type="button" class="post p-berry" data-t="product" data-cap="Berry, the team favorite." data-bg="img/social/berry.jpg" aria-label="Berry, the team favorite."><span class="t lo">Berry.</span></button></div>
      </div></div>
      <p class="phcap">Concept feed for HalfTime Chews, a class project.</p>
     </div>
@@ -1046,13 +1078,13 @@ body.look-b .chap.alt .meta em,body.look-b .chap.alt .vid figcaption em,body.loo
   <div class="env"><div class="tex"></div><div class="pool p1"></div></div>
   <h2>Your launch <br>point<em>.</em></h2>
   <p>Tell us where you want to go.</p>
-  <a class="go" id="go" href="mailto:teamlaunchpointktg@gmail.com"><i id="land"></i>Start a project</a>
-  <div class="facts"><a href="mailto:teamlaunchpointktg@gmail.com">teamlaunchpointktg@gmail.com</a><a href="https://www.instagram.com/launchpointmktg/" target="_blank" rel="noopener">@launchpointmktg</a><span>Philadelphia</span><span>English / Português</span></div>
+  <a class="go" id="go" href="mailto:teamlaunchpointktg@gmail.com?subject=New%20project%20(from%20the%20website)"><i id="land"></i>Start a project</a>
+  <div class="facts"><a href="mailto:teamlaunchpointktg@gmail.com?subject=New%20project%20(from%20the%20website)">teamlaunchpointktg@gmail.com</a><a href="https://www.instagram.com/launchpointmktg/" target="_blank" rel="noopener">@launchpointmktg</a><span>Philadelphia</span><span>English / Português</span></div>
  </section>
 </main>
 <dialog id="cine" aria-label="Video"><div class="cbox" id="cbox"></div><button type="button" class="cx" id="cx" aria-label="Close">×</button></dialog>
 <dialog id="lb" aria-label="Post"><button type="button" class="lbx" aria-label="Close">×</button><div class="lbpost" id="lbpost"></div><div class="lbnav"><button type="button" id="lbp" aria-label="Previous slide">‹</button><span id="lbdots"></span><button type="button" id="lbn" aria-label="Next slide">›</button></div><p class="lbcap" id="lbcap"></p><p class="lbwhy" id="lbwhy"></p></dialog>
-<a class="lp-bar" id="lp-bar" href="mailto:teamlaunchpointktg@gmail.com" aria-hidden="true" tabindex="-1"><i></i>Start a project<svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+<a class="lp-bar" id="lp-bar" href="mailto:teamlaunchpointktg@gmail.com?subject=New%20project%20(from%20the%20website)" aria-hidden="true" tabindex="-1"><i></i>Start a project<svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
 <script src="marks.js"></script>
 <script src="I.js"></script>
 </body>

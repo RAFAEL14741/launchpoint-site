@@ -3,6 +3,8 @@ const lpIS=b=>`image-set(url(${b}.avif) type("image/avif"),url(${b}.webp) type("
 function lpBg(el,p){const b=p.replace(/\.(jpg|webp|avif)$/,'');el.style.backgroundImage=`url(${b}.jpg)`;el.style.backgroundImage=lpIS(b)}
 const lpSmall=matchMedia('(max-width:700px)').matches,lpV=s=>lpSmall?s.replace(/\.mp4$/,'-480.mp4'):s,
   lpP=s=>lpSmall?s.replace(/\.mp4$/,'-pv.mp4'):s;/* phone: 6 s silent preview loop (~320 KB); the full ad loads on Sound on / Expand */
+/* iPhone: the address bar showing/hiding fires 'resize' mid-scroll (height only). Heavy relayout work must skip those, or the page freezes for ~0.7 s (Nov 21) */
+function lpOnResize(fn){let w=innerWidth,h=innerHeight;addEventListener('resize',()=>{if(innerWidth===w&&Math.abs(innerHeight-h)<160)return;w=innerWidth;h=innerHeight;fn()})}
 function lpFull(v,keep){if(v.src&&!/-pv\.mp4$/.test(v.src))return;const t=keep?v.currentTime||0:0;v.src=lpV(v.dataset.src);if(t)v.addEventListener('loadedmetadata',()=>{try{v.currentTime=t}catch(e){}},{once:true})}
 (()=>{const els=[...document.querySelectorAll('[data-bg]')];if(!('IntersectionObserver' in window)){els.forEach(e=>lpBg(e,e.dataset.bg));return}
  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){lpBg(e.target,e.target.dataset.bg);io.unobserve(e.target)}}),{rootMargin:'100% 0px'});
@@ -79,7 +81,7 @@ const R=(()=>{const story=document.getElementById('story'),wrap=document.getElem
     if(gone&&last){const dx=pt.x-last[0],dy=pt.y-last[1];if(dx*dx+dy*dy>36){spark(pt.x,pt.y,ang);if(dx*dx+dy*dy>400)spark(pt.x,pt.y,ang)}}
     last=[pt.x,pt.y];
     endEl.classList.toggle('lit',l>=L-4)}
-  let tick=0;addEventListener('scroll',()=>{if(!tick)tick=requestAnimationFrame(()=>{tick=0;update()})},{passive:true});addEventListener('resize',()=>{clearTimeout(R._t);R._t=setTimeout(build,120)});
+  let tick=0;addEventListener('scroll',()=>{if(!tick)tick=requestAnimationFrame(()=>{tick=0;update()})},{passive:true});lpOnResize(()=>{clearTimeout(R._t);R._t=setTimeout(build,120)});
   document.fonts.ready.then(build);addEventListener('load',build);
   return {build,update,setSparks:v=>sparks=v}})();
 
@@ -190,7 +192,7 @@ const CFG=(()=>{
   function fit(){out.querySelectorAll('.mark').forEach(m=>{m.style.fontSize='';const box=m.closest('.ink,.board,.bcard,.wb-nav,.tile');
     const max=(box.offsetWidth||300)*(box.classList.contains('ink')?.84:box.classList.contains('tile')?.84:box.classList.contains('wb-nav')?.42:.92),maxH=box.classList.contains('wb-nav')?28:box.classList.contains('ink')?box.offsetHeight*(+box.dataset.mh||.84):1e9;let i=0;
     while((m.scrollWidth>max||m.offsetHeight>maxH)&&i<30){m.style.fontSize=(parseFloat(getComputedStyle(m).fontSize)*.93)+'px';i++}})}
-  addEventListener('resize',()=>fit());
+  lpOnResize(()=>fit());
   function render(anim){const p=palette(),ty=TYPES[S.type],k=KINDS[S.kind];
     if(icW.dataset.kind!==S.kind){icons();icW.dataset.kind=S.kind}if(!MARKS[S.icon]||MARKS[S.icon].kind!==S.kind)S.icon=k.marks[0];
     for(const v of['b','bi','g','ik','m','f','fi','a','ai'])out.style.setProperty('--'+v,p[v]);brand.style.setProperty('--bc',p.b);
@@ -326,23 +328,10 @@ const CFG=(()=>{
   const v=scrollY>heroEnd()+innerHeight*.3&&end.getBoundingClientRect().top>innerHeight*.85&&!typing&&!zone;
   if(v!==on){on=v;bar.classList.toggle('on',v);bar.setAttribute('aria-hidden',String(!v));bar.tabIndex=v?0:-1}}
  const q=()=>{if(!tk)tk=requestAnimationFrame(chk)};addEventListener('scroll',q,{passive:true});addEventListener('resize',q);document.addEventListener('focusin',q);document.addEventListener('focusout',()=>setTimeout(q,50));chk()})();
-(()=>{[document.getElementById('out'),document.querySelector('.work')].forEach(row=>{if(!row)return;const n=row.children.length;if(n<2)return;
+(()=>{[document.getElementById('out'),document.querySelector('.work')].forEach(row=>{if(!row||row.closest('.cfg2'))return;/* Brand v2 gallery has its own pill dots */const n=row.children.length;if(n<2)return;
  const d=document.createElement('div');d.className='lp-dots';d.setAttribute('aria-hidden','true');d.innerHTML='<i></i>'.repeat(n);row.after(d);const ds=[...d.children];let tk=0;
  const up=()=>{tk=0;const m=row.scrollWidth-row.clientWidth,i=m>0?Math.round(row.scrollLeft/m*(n-1)):0;ds.forEach((e,k)=>e.classList.toggle('on',k===i))};
  row.addEventListener('scroll',()=>{if(!tk)tk=requestAnimationFrame(up)},{passive:true});up()})})();
-
-/* ---------- Social v2: pinned phone, scroll picks the beat (Nov 21) ---------- */
-(()=>{const box=document.getElementById('soc2'),grid=document.getElementById('iggrid');if(!box||!grid)return;
- const beats=[...box.querySelectorAll('.beat')],bars=[...box.querySelectorAll('.bars button')],posts=[...grid.querySelectorAll('.post')],N=beats.length;let cur=-1,tk=0;
- function go(k){if(k===cur)return;cur=k;beats.forEach((b,i)=>{b.classList.toggle('on',i===k);b.classList.toggle('past',i<k);b.setAttribute('aria-hidden',String(i!==k))});
-  const ts=beats[k].dataset.ts.split(' ');grid.classList.add('filt');posts.forEach(p=>p.classList.toggle('hit',ts.includes(p.dataset.t)));
-  bars.forEach((b,i)=>b.setAttribute('aria-current',String(i===k)))}
- function upd(){tk=0;const r=box.getBoundingClientRect(),run=Math.max(1,r.height-innerHeight),p=Math.max(0,Math.min(.9999,-r.top/run)),f=p*N,k=Math.floor(f);
-  go(k);bars.forEach((b,i)=>b.style.setProperty('--f',i<k?'1':i>k?'0':(f-k).toFixed(3)))}
- addEventListener('scroll',()=>{if(!tk)tk=requestAnimationFrame(upd)},{passive:true});addEventListener('resize',upd);upd();
- bars.forEach((b,i)=>b.addEventListener('click',()=>{const r=box.getBoundingClientRect(),run=r.height-innerHeight;
-  scrollTo({top:scrollY+r.top+run*(i+.5)/N,behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'})}));
-})();
 
 /* ---------- Brand v2: gallery + Customise (Nov 21) ---------- */
 (()=>{const cfg=document.getElementById('cfg');if(!cfg||!cfg.classList.contains('cfg2'))return;
@@ -352,7 +341,7 @@ const CFG=(()=>{
  const db=[...dots.children];let cur=-1,tk=0;
  function setCur(i){if(i===cur)return;cur=i;tiles.forEach((t,k)=>t.classList.toggle('cur',k===i));db.forEach((d,k)=>d.setAttribute('aria-current',String(k===i)));prev.disabled=i===0;next.disabled=i===tiles.length-1}
  function pick(){const r=out.getBoundingClientRect(),c=r.left+r.width/2;let bi=0,bd=1e9;tiles.forEach((t,k)=>{const b=t.getBoundingClientRect(),d=Math.abs(b.left+b.width/2-c);if(d<bd){bd=d;bi=k}});setCur(bi)}
- out.addEventListener('scroll',()=>{if(!tk)tk=requestAnimationFrame(()=>{tk=0;pick()})},{passive:true});addEventListener('resize',pick);
+ out.addEventListener('scroll',()=>{if(!tk)tk=requestAnimationFrame(()=>{tk=0;pick()})},{passive:true});lpOnResize(pick);
  const go=i=>{i=Math.max(0,Math.min(tiles.length-1,i));const t=tiles[i];out.scrollTo({left:t.offsetLeft-(out.clientWidth-t.offsetWidth)/2,behavior:reduce?'auto':'smooth'})};
  prev.addEventListener('click',()=>go(cur-1));next.addEventListener('click',()=>go(cur+1));db.forEach((d,k)=>d.addEventListener('click',()=>go(k)));
  tiles.forEach((t,k)=>t.addEventListener('click',()=>{if(k!==cur)go(k)}));

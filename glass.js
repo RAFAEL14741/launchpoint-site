@@ -114,7 +114,7 @@
   }
 
   function init() {
-    document.querySelectorAll('#cfg .bar2 .seg').forEach(function (s) { pill(s); });
+    document.querySelectorAll('#cfg .bar2 .seg, .pr-tog').forEach(function (s) { pill(s); });
     var ct = document.querySelector('#cfg .ctabs');
     if (ct) { pill(ct, 'aria-selected'); ct.classList.add('lg-tabs'); }
     var panel = document.querySelector('#cfg .ctl');
@@ -129,7 +129,7 @@
         clearTimeout(t); t = setTimeout(function () { R.build(); if (R.update) R.update(); }, 90);
       }).observe(story);
     }
-    var glassSel = '#cfg .bar2 .seg,#cfg .acts .shuf,#cfg .more-b,#cfg .gnav,.snd,.xp,#cfg .tile .cap';
+    var glassSel = '#cfg .bar2 .seg,.pr-tog,#cfg .acts .shuf,#cfg .more-b,#cfg .gnav,.snd,.xp,#cfg .tile .cap';
     document.querySelectorAll(glassSel).forEach(function (el) { el.classList.add('lg'); glow(el); });
     document.documentElement.classList.add('lg-on');
   }

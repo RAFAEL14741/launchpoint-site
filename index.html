@@ -927,7 +927,7 @@ body.look-b .chap.alt .meta em,body.look-b .chap.alt .vid figcaption em,body.loo
 .lg-on .lg-seg button{position:relative;z-index:1;background:none!important;box-shadow:none!important;transition:color .25s var(--ease),transform .5s cubic-bezier(.175,.885,.32,1.275)!important}
 .lg-on .lg-seg button[aria-pressed=true]{color:#FFF8EE!important}
 .lg-on .lg-seg button[aria-pressed=true]{touch-action:none}
-.lg-on #cfg .gnav.lg{display:flex!important;width:fit-content;margin-left:auto;margin-right:auto;gap:2px!important;padding:4px;border-radius:999px}
+.lg-on #cfg:not(.open) .gnav.lg{display:flex!important;width:fit-content;margin-left:auto;margin-right:auto;gap:2px!important;padding:4px;border-radius:999px}
 .lg-on #cfg .gnav.lg .gar{background:none!important}
 .lg-on #cfg .gnav.lg .gar:hover{background:rgba(255,255,255,.08)!important}
 .lg-on #cfg .gnav.lg .gdots{background:none!important}
@@ -935,6 +935,38 @@ body.look-b .chap.alt .meta em,body.look-b .chap.alt .vid figcaption em,body.loo
 .lg-on .tile .cap.lg{border-radius:999px}
 @media (max-width:700px){.lg-on .lg{-webkit-backdrop-filter:blur(10px) saturate(1.5)!important;backdrop-filter:blur(10px) saturate(1.5)!important}.lg-on .lg::after{display:none}}
 @media (prefers-reduced-motion:reduce){.lg-on .lg,.lg-on .lg-seg button{transition:none!important}}
+
+/* ---- customize panel as liquid glass + trail always under content ---- */
+.chap .in-wrap{z-index:7}
+.lg-on #cfg .ctl.lg-sheet{position:relative;isolation:isolate;border:0;border-radius:28px;padding:26px;
+ background:linear-gradient(180deg,rgba(255,255,255,.065),rgba(255,255,255,.015))!important;
+ -webkit-backdrop-filter:blur(22px) saturate(1.6) brightness(1.04);backdrop-filter:blur(22px) saturate(1.6) brightness(1.04);
+ box-shadow:inset 0 1px 0 rgba(255,255,255,.2),inset 0 -1px 0 rgba(255,255,255,.04),inset 0 0 0 1px rgba(255,255,255,.065),0 30px 70px -30px rgba(0,0,0,.75)!important}
+.lg-on #cfg .ctl.lg-sheet::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+ background:radial-gradient(260px circle at var(--gx,50%) var(--gy,0%),rgba(255,255,255,calc(var(--glow,0)*.05)),transparent 70%)}
+.lg-on #cfg .ctabs.lg-tabs{background:rgba(0,0,0,.28)!important;box-shadow:inset 0 1px 3px rgba(0,0,0,.45),inset 0 0 0 1px rgba(255,255,255,.05),0 1px 0 rgba(255,255,255,.05)!important;border-radius:999px!important;padding:4px!important}
+.lg-on #cfg .ctabs.lg-tabs .ct-thumb{display:none!important}
+.lg-on #cfg .ctabs.lg-tabs button{border-radius:999px!important;color:rgba(237,230,218,.6);font-weight:500}
+.lg-on #cfg .ctabs.lg-tabs button:hover,.lg-on #cfg .ctabs.lg-tabs button[aria-selected=true]{color:#FFF8EE}
+.lg-on #cfg .ctabs.lg-tabs .lg-pill{border-radius:999px}
+.lg-on #cfg .ctl input[type=text]{background:rgba(0,0,0,.26);border:0;border-radius:14px;padding:14px 16px;
+ box-shadow:inset 0 1px 3px rgba(0,0,0,.5),inset 0 0 0 1px rgba(255,255,255,.06),0 1px 0 rgba(255,255,255,.05);transition:box-shadow .3s var(--ease),background .3s var(--ease)}
+.lg-on #cfg .ctl input[type=text]:hover{box-shadow:inset 0 1px 3px rgba(0,0,0,.5),inset 0 0 0 1px rgba(255,255,255,.11),0 1px 0 rgba(255,255,255,.05)}
+.lg-on #cfg .ctl input[type=text]:focus{background:rgba(0,0,0,.34);box-shadow:inset 0 1px 3px rgba(0,0,0,.5),inset 0 0 0 1px rgba(226,120,62,.75),0 0 0 4px rgba(207,90,30,.12),0 0 26px -6px rgba(207,90,30,.5)}
+.lg-on #cfg .ctl .lb{color:rgba(237,230,218,.7)}
+@media (max-width:700px){.lg-on #cfg .ctl.lg-sheet{padding:18px;border-radius:22px;-webkit-backdrop-filter:blur(12px) saturate(1.4);backdrop-filter:blur(12px) saturate(1.4)}}
+
+/* the site hides the carousel nav while Customize is open; keep that */
+.lg-on #cfg.open .gnav.lg{display:none!important}
+/* customize options: recessed glass, selected = the same lit glass as the pill */
+.lg-on #cfg .ctl .seg button,.lg-on #cfg .ctl .icons button{border:0!important;border-radius:12px!important;color:rgba(237,230,218,.68)!important;
+ background:rgba(0,0,0,.22)!important;box-shadow:inset 0 1px 2px rgba(0,0,0,.42),inset 0 0 0 1px rgba(255,255,255,.05)!important;
+ transition:background .25s var(--ease),box-shadow .25s var(--ease),color .2s var(--ease),transform .5s cubic-bezier(.175,.885,.32,1.275)!important}
+.lg-on #cfg .ctl .seg button:hover,.lg-on #cfg .ctl .icons button:hover{color:var(--bone)!important;box-shadow:inset 0 1px 2px rgba(0,0,0,.42),inset 0 0 0 1px rgba(255,255,255,.12)!important}
+.lg-on #cfg .ctl .seg button[aria-pressed=true],.lg-on #cfg .ctl .icons button[aria-pressed=true]{color:#FFF8EE!important;
+ background:linear-gradient(180deg,rgba(255,255,255,.2),rgba(255,255,255,.07))!important;
+ box-shadow:inset 0 1px 0 rgba(255,255,255,.42),inset 0 -1px 0 rgba(255,255,255,.08),inset 0 0 0 1px rgba(255,255,255,.12),0 6px 16px -8px rgba(0,0,0,.6),0 0 20px -6px rgba(207,90,30,.4)!important}
+.lg-on #cfg .ctl .seg button:active,.lg-on #cfg .ctl .icons button:active{transform:scale(.96);transition:transform .12s ease-out!important}
 </style>
 </head>
 <body class="look-a">
@@ -1240,6 +1272,6 @@ body.look-b .chap.alt .meta em,body.look-b .chap.alt .vid figcaption em,body.loo
 function go(){var t=document.getElementById(id);if(t)window.scrollTo(0,t.getBoundingClientRect().top+scrollY)}
 if('scrollRestoration' in history)history.scrollRestoration='manual';
 addEventListener('load',function(){setTimeout(go,120);setTimeout(go,700)})})();</script>
-<script src="glass.js" defer></script>
+<script src="glass.js?v=2" defer></script>
 </body>
 </html>

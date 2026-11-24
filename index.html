@@ -842,6 +842,32 @@ body.look-b .chap.alt .meta em,body.look-b .chap.alt .vid figcaption em,body.loo
   .soc2 .bars button{height:44px}
   .soc2 .bars{margin-top:6px}
 }
+
+/* pricing */
+.pr{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:64px;align-items:center;max-width:1100px;margin:0 auto}
+.pr-main{text-align:left}
+.pr-price{display:flex;align-items:flex-start;font-family:Serif;font-weight:400;line-height:.8;color:var(--bone)}
+.pr-price .cur{font-size:clamp(40px,4vw,64px);margin-top:.18em;color:var(--ember)}
+.pr-price .num{font-size:clamp(150px,17vw,260px);letter-spacing:-.04em;text-shadow:0 0 80px rgba(207,90,30,.28)}
+.pr-sub{margin-top:22px;font-size:19px;line-height:1.5;color:var(--bone2);max-width:22em}
+.pr-go{margin-top:30px;display:inline-flex;align-items:center;gap:12px;font-size:16px;font-weight:500;color:var(--bone);border:1px solid rgba(237,230,218,.4);border-radius:12px;padding:15px 26px;text-decoration:none;transition:border-color .2s var(--ease),box-shadow .4s var(--ease)}
+.pr-go:hover,.pr-go:focus-visible{border-color:var(--ember);box-shadow:0 0 0 1px var(--ember),0 0 28px rgba(207,90,30,.25)}
+.pr-go i{width:10px;height:10px;border-radius:50%;background:var(--ember);box-shadow:0 0 14px var(--ember)}
+.pr-inc{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:0 32px;border-top:1px solid var(--line)}
+.pr-inc li{position:relative;padding:18px 0 18px 26px;border-bottom:1px solid var(--line);font-size:16px;line-height:1.45;color:var(--bone)}
+.pr-inc li::before{content:"";position:absolute;left:2px;top:25px;width:7px;height:7px;border-radius:50%;background:var(--ember);box-shadow:0 0 10px rgba(207,90,30,.7)}
+.pr-steps{grid-template-columns:repeat(3,minmax(0,1fr));max-width:1100px;margin:88px auto 0}
+.pr-more{display:grid;grid-template-columns:1fr 1fr;gap:64px;max-width:1100px;margin:96px auto 0}
+.pr-col h3{font-family:Serif;font-weight:400;font-size:clamp(30px,2.6vw,40px);line-height:1.05;color:var(--bone)}
+.pr-note{margin-top:10px;font-size:15px;line-height:1.5;color:var(--bone2);max-width:30em}
+.pr-rows{margin-top:24px;border-top:1px solid var(--line)}
+.pr-rows>div{display:flex;justify-content:space-between;align-items:baseline;gap:24px;padding:18px 0;border-bottom:1px solid var(--line)}
+.pr-rows dt{font-size:17px;font-weight:500;color:var(--bone)}
+.pr-rows dt span{display:block;margin-top:4px;font-size:14px;font-weight:400;line-height:1.45;color:var(--bone2)}
+.pr-rows dd{flex:none;font-size:16px;font-weight:500;color:var(--bone);white-space:nowrap}
+.pr-fine{max-width:1100px;margin:56px auto 0;font-size:13px;line-height:1.6;color:var(--bone2)}
+@media (max-width:900px){.pr{grid-template-columns:1fr;gap:44px}.pr-more{grid-template-columns:1fr;gap:56px}}
+@media (max-width:640px){.pr-inc{grid-template-columns:1fr}.pr-price .num{font-size:min(150px,40vw)}.pr-steps{grid-template-columns:1fr;margin-top:64px}.pr-more{margin-top:72px}.pr-rows dd{font-size:15px}}
 </style>
 </head>
 <body class="look-a">
@@ -857,7 +883,7 @@ body.look-b .chap.alt .meta em,body.look-b .chap.alt .vid figcaption em,body.loo
   <nav>
    <a href="#"><img src="logo-bone.webp" alt="Launch Point Marketing"></a>
    <div class="right">
-    <ul><li><a href="#brand">Brand</a></li><li><a href="#websites">Websites</a></li><li><a href="#social">Social</a></li><li><a href="#ads">Ads</a></li></ul>
+    <ul><li><a href="#brand">Brand</a></li><li><a href="#websites">Websites</a></li><li><a href="#social">Social</a></li><li><a href="#ads">Ads</a></li><li><a href="#pricing">Pricing</a></li></ul>
     <a class="cta" href="#end"><i></i>Start a project</a>
    </div>
   </nav>
@@ -1071,6 +1097,61 @@ body.look-b .chap.alt .meta em,body.look-b .chap.alt .vid figcaption em,body.loo
     <li><b>Measure</b><span>We watch messages, calls and orders, not likes.</span></li>
     <li><b>Report</b><span>Once a month, in plain words: what worked and what's next.</span></li>
    </ol>
+  </div>
+ </section>
+
+ <section class="chap" id="pricing">
+  <div class="env"><div class="tex"></div><div class="pool p1"></div></div>
+  <div class="in-wrap">
+   <div class="head">
+    <div><p class="n">Pricing</p><h2>One price for <br>the whole site<em>.</em></h2></div>
+    <div><p>We build you a free demo first. You only pay if you want to keep it.</p></div>
+   </div>
+   <div class="pr">
+    <div class="pr-main">
+     <div class="pr-price"><span class="cur">$</span><span class="num">250</span></div>
+     <p class="pr-sub">Your website, built from scratch. One time, no monthly fee.</p>
+     <a class="pr-go" href="#end"><i></i>Get my free demo</a>
+    </div>
+    <ul class="pr-inc" aria-label="Included in every site">
+     <li>Custom design, as many sections as you need</li>
+     <li>English and Português</li>
+     <li>Contact form to your email, plus call, WhatsApp and map buttons</li>
+     <li>Business email setup (you@yourbusiness.com)</li>
+     <li>Google Business profile and basic Google search setup</li>
+     <li>Fast on phones, with motion that feels premium</li>
+     <li>Your photos, or professional ones that fit</li>
+     <li>Two rounds of changes</li>
+    </ul>
+   </div>
+   <ol class="steps pr-steps">
+    <li><b>We build a free demo</b><span>A real preview with your name, info and photos.</span></li>
+    <li><b>You try it</b><span>We send you a link. No files, no pressure.</span></li>
+    <li><b>Keep it for $250</b><span>Say yes and we finish it and put it live.</span></li>
+   </ol>
+   <div class="pr-more">
+    <div class="pr-col">
+     <h3>Add-ons</h3>
+     <p class="pr-note">One-time. Every business is different, so we price these by what you actually need, and we keep it fair.</p>
+     <dl class="pr-rows">
+      <div><dt>Booking + owner portal<span>Customers book online. You log in and manage it all.</span></dt><dd>from $300</dd></div>
+      <div><dt>Online payments<span>Take payments or deposits on your site.</span></dt><dd>from $200</dd></div>
+      <div><dt>Customer accounts<span>Logins, saved info and order history.</span></dt><dd>from $250</dd></div>
+      <div><dt>Online store<span>Products, cart and checkout.</span></dt><dd>from $400</dd></div>
+      <div><dt>Something else<span>Tell us what you need.</span></dt><dd>Ask us</dd></div>
+     </dl>
+    </div>
+    <div class="pr-col">
+     <h3>Monthly, if you want it</h3>
+     <p class="pr-note">Optional. Cancel anytime.</p>
+     <dl class="pr-rows">
+      <div><dt>Site care<span>Hosting checks, small edits, kept fast and online.</span></dt><dd>$29/mo</dd></div>
+      <div><dt>Social media<span>Posts and Reels for Instagram, Facebook and TikTok.</span></dt><dd>from $249/mo</dd></div>
+      <div><dt>Ads<span>Set up and managed. Ad spend is paid to Meta or Google directly.</span></dt><dd>$199/mo</dd></div>
+     </dl>
+    </div>
+   </div>
+   <p class="pr-fine">Your domain (about $15 a year) and email inbox (about $7 a month with Google) are paid by you, directly, so they're always yours. Online payments run through Stripe, which keeps a small fee per sale (about 3%). Hosting is free for most small businesses; if yours ever outgrows it, that bill goes to you.</p>
   </div>
  </section>
 
